@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strikes Sensi</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #10101a;
+  color: white;
+  text-align: center;
+}
+main {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 24px;
+}
+h1 { color: #ff4242; }
+.card {
+  background: #202032;
+  padding: 20px;
+  margin: 16px 0;
+  border-radius: 14px;
+}
+button {
+  background: #ff4242;
+  color: white;
+  border: 0;
+  padding: 14px;
+  border-radius: 9px;
+  font-weight: bold;
+  width: 100%;
+  font-size: 16px;
+}
+</style>
+</head>
+<body>
+<main>
+<h1>🔥 STRIKES SENSI 🔥</h1>
+<p>Sensibilidade para Free Fire</p>
+<div class="card">
+<h2>Minha Sensibilidade</h2>
+<p>Geral: <b>190</b></p>
+<p>Ponto vermelho: <b>185</b></p>
+<p>Mira 2x: <b>175</b></p>
+<p>Mira 4x: <b>160</b></p>
+<p>Mira AWM: <b>100</b></p>
+<p>Olhadinha: <b>150</b></p>
+<button onclick="copiar()">Copiar sensibilidade</button>
+<p id="msg"></p>
+</div>
+<p>Strikes Sensi © 2026</p>
+</main>
+<script>
+function copiar() {
+  const texto = "Strikes Sensi\nGeral: 190\nPonto vermelho: 185\nMira 2x: 175\nMira 4x: 160\nMira AWM: 100\nOlhadinha: 150";
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(texto).then(() => {
+      document.getElementById("msg").textContent = "Sensibilidade copiada!";
+    }).catch(() => {
+      document.getElementById("msg").textContent = texto;
+    });
+  } else {
+    document.getElementById("msg").textContent = texto;
+  }
+}
+</script>
+</body>
+</html>
