@@ -4,69 +4,381 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strikes Sensi</title>
+<meta name="theme-color" content="#ffffff">
+<title>STRIKES SENSI</title>
+
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #10101a;
+  color: #171717;
+  background: #fff;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 15% 15%, white 0 8%, transparent 9%),
+    radial-gradient(ellipse at 80% 25%, white 0 12%, transparent 13%),
+    radial-gradient(ellipse at 40% 65%, #fff 0 10%, transparent 11%),
+    linear-gradient(#e9f8ff, #ffffff 65%);
+}
+
+header {
+  text-align: center;
+  padding: 28px 12px;
+  background: rgba(255,255,255,.86);
+  border-bottom: 3px solid #e53935;
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(28px, 8vw, 42px);
+  color: #e32626;
+  text-shadow: 2px 2px #ffdada;
+}
+
+header p {
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+main {
+  width: min(92%, 600px);
+  margin: 20px auto;
+}
+
+.card {
+  background: rgba(255,255,255,.94);
+  padding: 20px;
+  margin-bottom: 18px;
+  border-radius: 18px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 5px 18px #0000000d;
+}
+
+h2 {
+  margin-top: 0;
+  color: #e32626;
+}
+
+label {
+  display: block;
+  margin: 14px 0 6px;
+  font-weight: bold;
+}
+
+select, input[type="number"] {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: white;
+  font-size: 16px;
+}
+
+button {
+  padding: 13px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #e32626;
   color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(.98);
+}
+
+.generate {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.secondary {
+  background: #242424;
+}
+
+.result {
+  display: none;
+  background: #fff7f7;
+  border: 1px solid #ffcaca;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 18px;
+}
+
+.result p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.result strong {
+  color: #d82020;
+}
+
+.stats {
+  display: flex;
+  gap: 12px;
+}
+
+.stats button, .stats .counter {
+  flex: 1;
   text-align: center;
 }
-main {
-  max-width: 420px;
-  margin: 40px auto;
-  padding: 24px;
-}
-h1 { color: #ff4242; }
-.card {
-  background: #202032;
-  padding: 20px;
-  margin: 16px 0;
-  border-radius: 14px;
-}
-button {
-  background: #ff4242;
-  color: white;
-  border: 0;
-  padding: 14px;
-  border-radius: 9px;
+
+.counter {
+  padding: 14px 6px;
+  background: #f5f5f5;
+  border-radius: 10px;
   font-weight: bold;
-  width: 100%;
-  font-size: 16px;
+}
+
+.hint {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #666;
+  font-size: 13px;
 }
 </style>
 </head>
+
 <body>
+<header>
+  <h1>🔥 STRIKES SENSI</h1>
+  <p>Sua configuração, seu estilo, sua jogada!</p>
+</header>
+
 <main>
-<h1>🔥 STRIKES SENSI 🔥</h1>
-<p>Sensibilidade para Free Fire</p>
-<div class="card">
-<h2>Minha Sensibilidade</h2>
-<p>Geral: <b>190</b></p>
-<p>Ponto vermelho: <b>185</b></p>
-<p>Mira 2x: <b>175</b></p>
-<p>Mira 4x: <b>160</b></p>
-<p>Mira AWM: <b>100</b></p>
-<p>Olhadinha: <b>150</b></p>
-<button onclick="copiar()">Copiar sensibilidade</button>
-<p id="msg"></p>
-</div>
-<p>Strikes Sensi © 2026</p>
+  <section class="card">
+    <h2>🎮 Configurar sensibilidade</h2>
+
+    <label for="game">Escolha o jogo</label>
+    <select id="game">
+      <option>Free Fire</option>
+      <option>Free Fire MAX</option>
+    </select>
+
+    <label for="phone">Modelo do celular</label>
+    <select id="phone">
+      <option value="1">Celular básico</option>
+      <option value="2">Celular intermediário</option>
+      <option value="3">Celular potente</option>
+    </select>
+
+    <label for="weapon">Escolha a arma</label>
+    <select id="weapon">
+      <option value="0">Desert Eagle</option>
+      <option value="1">M1887</option>
+      <option value="2">MP40</option>
+      <option value="3">UMP</option>
+      <option value="4">Águia do Deserto / pistolas</option>
+      <option value="5">Rifles (M4A1, SCAR)</option>
+      <option value="6">Todas as armas</option>
+    </select>
+
+    <label for="dpi">DPI do celular</label>
+    <input id="dpi" type="number" min="200" max="1000"
+      value="400" placeholder="Ex.: 400">
+
+    <label for="buttonSize">Tamanho do botão de tiro (%)</label>
+    <input id="buttonSize" type="number" min="10" max="100"
+      value="50">
+
+    <label for="quality">Qualidade da configuração</label>
+    <select id="quality">
+      <option value="high">Alta</option>
+      <option value="low">Baixa</option>
+    </select>
+
+    <label for="style">Estilo de jogo</label>
+    <select id="style">
+      <option value="instaplaye">Instaplaye</option>
+      <option value="freestyle">Freestyle</option>
+      <option value="drive">Style Drive</option>
+      <option value="jump">Style Jump</option>
+    </select>
+
+    <button class="generate" onclick="generateSensitivity()">
+      ⚡ GERAR SENSIBILIDADE
+    </button>
+
+    <div class="result" id="result" aria-live="polite">
+      <h2>🎯 Sua configuração sugerida</h2>
+      <div id="resultContent"></div>
+      <p class="hint">
+        Estas são sugestões iniciais, não configurações oficiais.
+        Ajuste no treinamento de acordo com a resposta do seu celular.
+      </p>
+      <button class="secondary" onclick="copyResult()">
+        📋 Copiar configuração
+      </button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>💡 Dicas para jogar</h2>
+    <ul class="hint">
+      <li>Teste a sensibilidade no modo de treinamento.</li>
+      <li>Faça pequenos ajustes, um de cada vez.</li>
+      <li>Escolha um tamanho de botão confortável para seus dedos.</li>
+      <li>O resultado varia conforme o aparelho e as preferências.</li>
+      <li>Não existe uma configuração perfeita para todos os jogadores.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>❤️ Comunidade STRIKES SENSI</h2>
+    <div class="stats">
+      <button id="likeButton" onclick="likeSite()">❤️ Curtir</button>
+      <div class="counter">
+        ❤️ <span id="likes">0</span><br>
+        <small>Curtidas neste aparelho</small>
+      </div>
+    </div>
+    <p class="hint">
+      Visitas nesta sessão:
+      <strong id="visits">1</strong>
+    </p>
+    <p class="hint">
+      Os contadores desta versão são locais e demonstrativos.
+      Para contar curtidas e visitas de todas as pessoas, será necessário
+      conectar um serviço de armazenamento.
+    </p>
+  </section>
 </main>
+
+<footer>
+  STRIKES SENSI © 2026<br>
+  Projeto independente, não oficial e sem vínculo com a Garena.
+</footer>
+
 <script>
-function copiar() {
-  const texto = "Strikes Sensi\nGeral: 190\nPonto vermelho: 185\nMira 2x: 175\nMira 4x: 160\nMira AWM: 100\nOlhadinha: 150";
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(texto).then(() => {
-      document.getElementById("msg").textContent = "Sensibilidade copiada!";
-    }).catch(() => {
-      document.getElementById("msg").textContent = texto;
-    });
+function generateSensitivity() {
+  const phone = Number(document.getElementById("phone").value);
+  const weapon = Number(document.getElementById("weapon").value);
+  const dpi = Number(document.getElementById("dpi").value);
+  const buttonSize = Number(document.getElementById("buttonSize").value);
+  const quality = document.getElementById("quality").value;
+  const style = document.getElementById("style").value;
+  const game = document.getElementById("game").value;
+
+  if (!Number.isFinite(dpi) || dpi < 200 || dpi > 1000) {
+    alert("Digite um DPI entre 200 e 1000.");
+    return;
+  }
+
+  if (!Number.isFinite(buttonSize) ||
+      buttonSize < 10 || buttonSize > 100) {
+    alert("Digite um tamanho de botão entre 10% e 100%.");
+    return;
+  }
+
+  const styleBonus = {
+    instaplaye: 8,
+    freestyle: 5,
+    drive: 2,
+    jump: 7
+  }[style] ?? 0;
+
+  const weaponBonus = {
+    0: 8, 1: 10, 2: 5, 3: 3, 4: 8, 5: 0, 6: 4
+  }[weapon] ?? 0;
+
+  const phoneBonus = {
+    1: -8,
+    2: 0,
+    3: 5
+  }[phone] ?? 0;
+
+  const dpiBonus = Math.round((dpi - 400) / 30);
+  const qualityBonus = quality === "high" ? 3 : -3;
+  const buttonBonus = Math.round((buttonSize - 50) / 10);
+
+  let base = 165 + styleBonus + weaponBonus +
+             phoneBonus + dpiBonus + qualityBonus + buttonBonus;
+
+  base = Math.max(80, Math.min(200, base));
+
+  const clamp = value => Math.max(0, Math.min(200, value));
+
+  const values = {
+    "Geral": clamp(base),
+    "Ponto vermelho": clamp(base - 8),
+    "Mira 2x": clamp(base - 20),
+    "Mira 4x": clamp(base - 35),
+    "Mira AWM": clamp(base - 65),
+    "Olhadinha": clamp(base - 10)
+  };
+
+  let html = `<p><span>Jogo</span><strong>${game}</strong></p>`;
+
+  for (const [name, value] of Object.entries(values)) {
+    html += `<p><span>${name}</span><strong>${value}</strong></p>`;
+  }
+
+  html += `<p><span>DPI informado</span><strong>${dpi}</strong></p>`;
+  html += `<p><span>Botão de tiro</span><strong>${buttonSize}%</strong></p>`;
+
+  document.getElementById("resultContent").innerHTML = html;
+  document.getElementById("result").style.display = "block";
+}
+
+function copyResult() {
+  const text = document.getElementById("resultContent").innerText;
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text)
+      .then(() => alert("Configuração copiada!"))
+      .catch(() => alert("Selecione e copie o texto manualmente."));
   } else {
-    document.getElementById("msg").textContent = texto;
+    alert("Selecione e copie manualmente os valores exibidos.");
   }
 }
+
+function likeSite() {
+  if (localStorage.getItem("strikesLiked") === "yes") {
+    alert("Você já curtiu neste aparelho!");
+    return;
+  }
+
+  let likes = Number(localStorage.getItem("strikesLikes") || 0);
+  likes++;
+  localStorage.setItem("strikesLikes", likes);
+  localStorage.setItem("strikesLiked", "yes");
+  document.getElementById("likes").textContent = likes;
+  document.getElementById("likeButton").textContent = "❤️ Curtido";
+}
+
+const savedLikes = Number(localStorage.getItem("strikesLikes") || 0);
+document.getElementById("likes").textContent = savedLikes;
+
+if (localStorage.getItem("strikesLiked") === "yes") {
+  document.getElementById("likeButton").textContent = "❤️ Curtido";
+}
+
+const visits = Number(sessionStorage.getItem("strikesVisits") || 0) + 1;
+sessionStorage.setItem("strikesVisits", visits);
+document.getElementById("visits").textContent = visits;
 </script>
 </body>
 </html>
